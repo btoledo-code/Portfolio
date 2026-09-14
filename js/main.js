@@ -55,7 +55,8 @@ const measureBody = (section) => {
   );
 };
 
-const openHeight = (section, amount) => headSize() + measureBody(section) * amount;
+const openHeight = (section, amount) =>
+  headSize() + measureBody(section) * amount;
 
 const previewScene = Number(new URLSearchParams(location.search).get("scene"));
 

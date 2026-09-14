@@ -9,6 +9,7 @@
   --line: #e0561c;
   --gray: #eceae6;
   --radius: clamp(1.85rem, 5vw, 3.25rem);
+  --hero-radius: 80px;
   --head-h: 6.75rem;
   --open: 0;
   --display: "Poppins", sans-serif;
@@ -101,37 +102,24 @@ a {
   flex: 1 1 auto;
   min-height: 0;
   z-index: 1;
-  overflow: visible;
+  overflow: hidden;
   background: var(--cream);
-  border-radius: 0;
-}
-
-.panel--hero::before {
-  content: "";
-  position: absolute;
-  left: 0;
-  top: 0;
-  bottom: 0;
-  width: 80px;
-  background: var(--teal);
-  pointer-events: none;
+  border-radius: 0 0 var(--hero-radius) var(--hero-radius);
 }
 
 .panel--experience,
 .panel--projects {
   flex: 0 0 auto;
   height: var(--h, var(--head-h));
-  margin-top: -28px;
   padding: 0 clamp(1rem, 4vw, 2.5rem);
   overflow: visible;
-  border-top-left-radius: 80px;
-  border-top-right-radius: 80px;
-  border-bottom-left-radius: 0;
-  border-bottom-right-radius: 0;
 }
 
 .panel--experience {
   z-index: 2;
+  margin-top: -101px;
+  border-top-left-radius: 80px;
+  border-top-right-radius: 80px;
   --panel-fill: color-mix(
     in srgb,
     var(--gold) calc((1 - var(--open)) * 100%),
@@ -153,6 +141,9 @@ a {
 
 .panel--projects {
   z-index: 3;
+  margin-top: -28px;
+  border-top-left-radius: 80px;
+  border-top-right-radius: 80px;
   --panel-fill: color-mix(
     in srgb,
     var(--orange) calc((1 - var(--open)) * 100%),
@@ -227,8 +218,8 @@ a {
   position: relative;
   z-index: 1;
   display: grid;
-  grid-template-columns: minmax(0, 0.92fr) minmax(0, 1.08fr);
-  column-gap: clamp(1.75rem, 5.5vw, 5rem);
+  grid-template-columns: auto minmax(0, 1fr);
+  column-gap: clamp(2.25rem, 6.5vw, 6rem);
   align-items: stretch;
   height: 100%;
   min-height: 0;
@@ -243,8 +234,9 @@ a {
 
 .hero__art img {
   display: block;
-  width: 100%;
-  height: auto;
+  height: 100%;
+  width: auto;
+  max-width: none;
 }
 
 .hero__copy {
@@ -255,18 +247,18 @@ a {
   min-width: 0;
   background: var(--cream);
   padding: clamp(1rem, 4vw, 3rem) clamp(0.9rem, 4vw, 3.5rem)
-    clamp(2rem, 6vw, 4rem) 0;
+    clamp(2.5rem, 7vw, 5rem) 0;
 }
 
 .hero__copy h1 {
-  font-size: clamp(2.1rem, 8vw, 5.6rem);
+  font-size: clamp(2.1rem, 8vw, 5.8rem);
   font-weight: 800;
   line-height: 0.92;
   letter-spacing: -0.045em;
 }
 
 .hero__role {
-  margin-top: 0.85rem;
+  margin-top: 1.45rem;
   color: var(--role);
   font-family: var(--sans);
   font-size: clamp(0.88rem, 1.5vw, 1.05rem);
@@ -435,6 +427,8 @@ body.no-pin .panel--experience,
 body.no-pin .panel--projects {
   height: auto;
   min-height: auto;
+  margin-top: 0;
+  padding-top: 0;
   background: var(--cream);
 }
 
@@ -457,6 +451,19 @@ body.no-pin .panel__body {
   .job {
     grid-template-columns: 7rem 1.4rem minmax(0, 1fr);
     margin-bottom: 2rem;
+  }
+}
+
+@media (max-width: 800px) {
+  .hero {
+    grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+    column-gap: clamp(1rem, 4vw, 2rem);
+  }
+
+  .hero__art img {
+    width: 100%;
+    height: auto;
+    max-height: 100%;
   }
 }
 
@@ -499,6 +506,8 @@ body.no-pin .panel__body {
   .panel--experience,
   .panel--projects {
     height: auto;
+    margin-top: 0;
+    padding-top: 0;
     background: var(--cream);
   }
 
