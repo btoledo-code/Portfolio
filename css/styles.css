@@ -196,7 +196,7 @@ a {
 .hero {
   display: grid;
   grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
-  align-items: stretch;
+  align-items: center;
   height: 100%;
   min-height: 0;
 }
@@ -204,15 +204,20 @@ a {
 .hero__art {
   min-width: 0;
   min-height: 0;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
   overflow: hidden;
-  border-bottom-right-radius: var(--radius);
 }
 
 .hero__art img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: 70% 14%;
+  display: block;
+  width: auto;
+  max-width: 100%;
+  height: auto;
+  max-height: 100%;
+  object-fit: contain;
+  object-position: center right;
 }
 
 .hero__copy {
@@ -468,10 +473,6 @@ body.no-pin .panel__body {
 @media (min-width: 900px) {
   .hero__copy h1 {
     font-size: clamp(3.4rem, 6vw, 5.8rem);
-  }
-
-  .hero__art img {
-    object-position: 60% 16%;
   }
 
   .timeline::before {
