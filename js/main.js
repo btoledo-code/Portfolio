@@ -5,7 +5,6 @@ const easeOutCubic = (t) => 1 - (1 - t) ** 3;
 const map = (value, start, end) => clamp((value - start) / (end - start), 0, 1);
 
 const pin = document.querySelector(".pin");
-const frame = document.querySelector(".pin__frame");
 const experience = document.querySelector("[data-scene='experience']");
 const projects = document.querySelector("[data-scene='projects']");
 
@@ -44,37 +43,46 @@ const setScene = (section, amount, height) => {
   section.style.setProperty("--h", `${height}px`);
 };
 
+const measureBody = (section) => {
+  const body = section.querySelector(".panel__body");
+  const inner = body?.firstElementChild;
+  if (!body || !inner) return 0;
+  const styles = getComputedStyle(body);
+  return (
+    inner.scrollHeight +
+    Number.parseFloat(styles.paddingTop) +
+    Number.parseFloat(styles.paddingBottom)
+  );
+};
+
+const openHeight = (section, amount) => headSize() + measureBody(section) * amount;
+
 const previewScene = Number(new URLSearchParams(location.search).get("scene"));
 
 const applyForcedScene = () => {
   if (previewScene !== 2 && previewScene !== 3) return false;
-  const head = headSize();
-  const leftover = frame.clientHeight * 0.48;
   if (previewScene === 2) {
-    setScene(experience, 1, head + leftover);
-    setScene(projects, 0, head);
+    setScene(experience, 1, openHeight(experience, 1));
+    setScene(projects, 0, openHeight(projects, 0));
   } else {
-    setScene(experience, 0, head);
-    setScene(projects, 1, head + leftover);
+    setScene(experience, 0, openHeight(experience, 0));
+    setScene(projects, 1, openHeight(projects, 1));
   }
   return true;
 };
 
 const update = () => {
   if (reduceMotion) {
-    setScene(experience, 1, experience.scrollHeight);
-    setScene(projects, 1, projects.scrollHeight);
+    setScene(experience, 1, openHeight(experience, 1));
+    setScene(projects, 1, openHeight(projects, 1));
     return;
   }
 
   if (applyForcedScene()) return;
 
   const { experience: exp, projects: proj } = sceneAmounts(sceneProgress());
-  const head = headSize();
-  const leftover = frame.clientHeight * 0.48;
-
-  setScene(experience, exp, head + leftover * exp);
-  setScene(projects, proj, head + leftover * proj);
+  setScene(experience, exp, openHeight(experience, exp));
+  setScene(projects, proj, openHeight(projects, proj));
 };
 
 let ticking = false;
