@@ -5,6 +5,7 @@ const easeOutCubic = (t) => 1 - (1 - t) ** 3;
 const map = (value, start, end) => clamp((value - start) / (end - start), 0, 1);
 
 const pin = document.querySelector(".pin");
+const frame = document.querySelector(".pin__frame");
 const experience = document.querySelector("[data-scene='experience']");
 const projects = document.querySelector("[data-scene='projects']");
 
@@ -55,8 +56,15 @@ const measureBody = (section) => {
   );
 };
 
-const openHeight = (section, amount) =>
-  headSize() + measureBody(section) * amount;
+const overlapSize = 58;
+
+const openHeight = (section, amount) => {
+  const head = headSize();
+  const needed = head + measureBody(section) * amount;
+  if (section !== experience || amount < 0.02) return needed;
+  const maxH = frame.clientHeight - headSize() + overlapSize;
+  return Math.min(needed, maxH);
+};
 
 const previewScene = Number(new URLSearchParams(location.search).get("scene"));
 
